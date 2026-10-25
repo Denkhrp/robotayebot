@@ -2,7 +2,7 @@ import asyncio
 import os
 from telethon import TelegramClient, errors, events
 
-# ─── Конфігурація ─────────────────────────────────────────────────────────────
+# Конфігурація 
 API_ID       = os.environ["API_ID"]
 API_HASH     = os.environ["API_HASH"]
 PHONE        = os.environ["PHONE"]
@@ -17,7 +17,7 @@ print(f"Джерела: {SOURCE_IDS}")
 print(f"Призначення: {DEST_ID}")
 print(f"Ключові слова: {KEYWORDS if KEYWORDS else 'ВСІ'}")
 
-# ─── Клієнт ───────────────────────────────────────────────────────────────────
+#  Клієнт
 from telethon.sessions import StringSession
 
 if SESSION:
@@ -25,7 +25,7 @@ if SESSION:
 else:
     client = TelegramClient("session_file", API_ID, API_HASH)
 
-# ─── Хелпери ──────────────────────────────────────────────────────────────────
+# Хелпери 
 def build_message(message, source_chat):
     text = message.text or ""
 
@@ -49,7 +49,7 @@ def build_message(message, source_chat):
 
     return text + author_line + f"\n🔗 {link}"
 
-# ─── Обробник нових повідомлень ───────────────────────────────────────────────
+# Обробник нових повідомлень 
 @client.on(events.NewMessage(chats=SOURCE_IDS))
 async def handler(event):
     message = event.message
@@ -64,16 +64,16 @@ async def handler(event):
 
     try:
         await client.send_message(DEST_ID, text_to_send, link_preview=False)
-        print(f"✅ Переслано з {source_chat.title} msg_id={message.id}")
+        print(f"Переслано з {source_chat.title} msg_id={message.id}")
     except Exception as e:
         print(f"❌ Помилка: {e}")
 
-# ─── Запуск ───────────────────────────────────────────────────────────────────
+# Запуск 
 async def main():
     await client.start(phone=PHONE)
     me = await client.get_me()
-    print(f"✅ Авторизовано як: {me.first_name} ({me.phone})")
-    print("🔍 Слухаю повідомлення...")
+    print(f"Авторизовано як: {me.first_name} ({me.phone})")
+    print("Слухаю повідомлення...")
     await client.run_until_disconnected()
 
 if __name__ == "__main__":
