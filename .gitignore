@@ -1,0 +1,17 @@
+# Секретні файли — НІКОЛИ не завантажувати на GitHub
+credentials.txt
+*.session
+.env
+chats_of_*.txt
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
